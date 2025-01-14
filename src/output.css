@@ -1,0 +1,35 @@
+/* ...existing code... */
+
+.sidebar {
+  width: 16rem; /* Adjust the width as needed */
+}
+
+/* Ensure the content area has a left margin to avoid overlap with the sidebar */
+.content {
+  padding: 1rem; /* Add padding for better spacing */
+  flex: 1;
+  padding-bottom: 4rem; /* Ensure there's space for the footer */
+}
+
+@media (min-width: 1024px) {
+  .content {
+    margin-left: 16rem; /* Same as the sidebar width */
+  }
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background-color: #2d3748; /* Tailwind's bg-gray-800 */
+  color: #fff; /* Tailwind's text-white */
+  padding: 1rem 0; /* Tailwind's py-4 */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ...existing code... */
