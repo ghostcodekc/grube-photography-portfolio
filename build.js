@@ -3,6 +3,17 @@ const fs = require('fs');
 const path = require('path');
 const fse = require('fs-extra');
 
+// Ensure the output directory exists
+if (!fs.existsSync('dist')) {
+  try {
+    fs.mkdirSync('dist');
+    console.log('Created dist directory.');
+  } catch (err) {
+    console.error('Error creating dist directory:', err);
+    process.exit(1); // Exit the process with an error code
+  }
+}
+
 // Define the pages to render
 const pages = [
   { template: 'pages/index.ejs', output: 'dist/index.html' },
@@ -11,11 +22,6 @@ const pages = [
   { template: 'pages/services.ejs', output: 'dist/services.html' },
   { template: 'pages/404.ejs', output: 'dist/404.html' },
 ];
-
-// Ensure the output directory exists
-// if (!fs.existsSync('dist')) {
-//   fs.mkdirSync('dist');
-// }
 
 // Render each page
 pages.forEach(page => {
