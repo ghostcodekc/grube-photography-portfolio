@@ -49,3 +49,12 @@ fse.copy(srcAssets, destAssets, err => {
     console.log('Assets folder copied successfully.');
   }
 });
+
+// Copy web manifest
+fs.copyFile("site.webmanifest", "dist/site.webmanifest", (err) => {
+  if (err) {
+    console.error('Error copying manifest: ', err);
+  } else {
+    console.log('Manifest file copied successfully.');
+  }
+});
