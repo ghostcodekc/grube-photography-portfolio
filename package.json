@@ -19,6 +19,6 @@
   "scripts": {
     "build:css": "npx tailwindcss -i ./src/input.css -o ./public/assets/css/output.css",
     "start": "node server.js",
-    "build": "node build.js & npx tailwindcss -i ./src/input.css -o /dist/output.css"
+    "build": "node build.js"
   }
 }
