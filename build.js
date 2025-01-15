@@ -13,9 +13,9 @@ const pages = [
 ];
 
 // Ensure the output directory exists
-if (!fs.existsSync('dist')) {
-  fs.mkdirSync('dist');
-}
+// if (!fs.existsSync('dist')) {
+//   fs.mkdirSync('dist');
+// }
 
 // Render each page
 pages.forEach(page => {
