@@ -4,6 +4,9 @@ module.exports = {
   content: ["./views/**/*.{ejs,html,js}"],
   theme: {
     extend: {
+      margin: {
+        100: '25.5rem'
+      },
       colors: {
         'default-color': '#14532d'
       },
