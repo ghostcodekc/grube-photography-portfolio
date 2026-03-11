@@ -8,6 +8,26 @@ A modern, fast, and data-driven photography portfolio website.
 - **Lazy Loading**: Images load as they enter the viewport to save 3G bandwidth.
 - **Zero-Dependency Lightbox**: Powered by PhotoSwipe v5 for a smooth, app-like experience.
 
+## 💻 Development
+
+### 1. Install Dependencies
+```bash
+npm install
+```
+
+### 2. Start Tailwind CSS Watcher
+In a separate terminal, run this to compile styles as you edit:
+```bash
+npx tailwindcss -i ./src/input.css -o ./public/assets/css/output.css --watch
+```
+
+### 3. Build and Run
+To generate the static files and start the development server:
+```bash
+npm run build && npm run start
+```
+The server will be running at `http://localhost:8080`.
+
 ## 📸 How to Add New Images
 
 The gallery is data-driven and organized by category.
@@ -33,15 +53,11 @@ Add a new entry:
 }
 ```
 
-### 3. Build and Deploy
-- Run the build command to generate the static site:
-  ```bash
-  npm run build
-  ```
-- If you are running the development server (`npm start`), you must **restart the server** to see changes made to the JSON files.
+### 3. Build
+Run `npm run build` to generate optimized thumbnails and static HTML.
 
 ### 4. Deploy
-- Commit your changes and push to `main`. AWS Amplify will automatically detect the changes and deploy the site.
+Commit your changes and push to `main`. AWS Amplify will automatically detect the changes and deploy the site.
 
 ## 🛠 Tech Stack
 - **Engine**: Node.js / Express / EJS

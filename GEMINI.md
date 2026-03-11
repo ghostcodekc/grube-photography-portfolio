@@ -6,15 +6,17 @@ A photography portfolio website for Andrew Grube, featuring a gallery, services,
 ## Architecture
 - **Hybrid SSR/Static**: 
   - **Development**: Uses Express and EJS to serve dynamic routes.
-  - **Build Process**: `build.js` renders EJS templates into static `.html` files and automatically generates optimized thumbnails (small/medium) from the `full/` image directory using `sharp`.
-- **Data-Driven Gallery**: The `index.ejs` gallery is powered by `src/data/gallery.json`, allowing for easy image management without editing HTML.
+  - **Build Process**: `build.js` renders EJS templates into static `.html` files and automatically generates optimized thumbnails (small/medium/4:3 cropped) from organized `full/` image directories using `sharp`.
+- **Data-Driven Gallery**: The site is powered by `src/data/gallery.json` (Home) and `src/data/portraits.json` (Portraits), allowing for easy image management without editing HTML.
+- **Categorized Storage**: Images are organized into `general` and `portraits` subdirectories within both `full/` and `thumbs/` folders.
 - **Client-Side**: Uses Tailwind CSS for styling, Feather Icons for iconography, and **PhotoSwipe v5** (zero-dependency) for the image gallery experience.
 
 ## Performance Standards
 - **Image Optimization**: The build process automatically generates both AVIF and WebP thumbnails to reduce payload size. AVIF is prioritized for its superior compression.
-- **Priority Loading**: Hero images use `fetchpriority="high"` and `loading="eager"`.
+- **Fixed Aspect Ratios**: Gallery grid images are automatically cropped to **4:3 (Landscape)** to ensure a uniform UI and prevent layout shifts.
+- **Priority Loading**: Hero images use `fetchpriority="high"` and `loading="eager"`. The hero image on the home page is constrained to `50vh`.
 - **Lazy Loading**: Non-critical images use `loading="lazy"` and `decoding="async"` to improve 3G network performance.
-- **Minimal Payload**: Removed jQuery and Lightbox2 in favor of PhotoSwipe v5, significantly reducing the initial JavaScript payload.
+- **Minimal Payload**: Zero-dependency frontend (no jQuery). PhotoSwipe v5 significantly reduces the initial JavaScript payload.
 - **Responsive Images**: Use of `<picture>` tags with AVIF and WebP source sets to serve the smallest viable image to the client.
 
 ## Tech Stack
@@ -31,25 +33,22 @@ A photography portfolio website for Andrew Grube, featuring a gallery, services,
 - **Workflow**: Amplify executes the build script to generate the static `dist/` folder which is then served.
 
 ## Key Files & Directories
-- `server.js`: Express server for local development. Handles 404s via dynamic EJS rendering.
-- `build.js`: The SSG (Static Site Generation) script that prepares the `dist/` folder.
-- `src/data/gallery.json`: Centralized metadata for the photography gallery.
+- `server.js`: Express server for local development. Handles 404s via dynamic EJS rendering and serves AVIF with correct MIME types.
+- `build.js`: The SSG (Static Site Generation) script that prepares the `dist/` folder and processes images.
+- `src/data/`: Contains `gallery.json` and `portraits.json` metadata.
 - `views/`: Contains EJS templates.
-  - `pages/`: Individual page templates (index, about, etc.).
-  - `partials/`: Reusable components (header, footer, sidebar).
-- `public/assets/`: Static assets (images, CSS, JS) used by both Express and the static build.
+- `public/assets/images/`: Organized into `full/` (source) and `thumbs/` (generated, git-ignored).
 - `src/input.css`: Tailwind entry point.
 
 ## Conventions
-- **Routing**: Support both clean URLs (e.g., `/about`) and static extensions (e.g., `/about.html`) in `server.js` to ensure compatibility between dev and prod environments.
-- **Base Paths**: Use `<%= basePath %>` in templates to ensure links work correctly regardless of the environment's root directory.
-- **Images**: High-resolution images are stored in `public/assets/images/full/`, while optimized thumbnails and responsive variants are in `public/assets/images/thumbs/`.
-- **Styling**: Prefer Tailwind utility classes. The main output is generated to `public/assets/css/output.css`.
+- **Routing**: Support both clean URLs (e.g., `/about`) and static extensions (e.g., `/about.html`) in `server.js`.
+- **Base Paths**: Use `<%= basePath %>` in templates.
+- **Styling**: Prefer Tailwind utility classes. Output generated to `public/assets/css/output.css`.
 
 ## Documentation Mandate
-- **Maintenance**: This `GEMINI.md` file is the primary source of truth for the project's architecture and standards. It **MUST** be updated immediately following any significant changes to the build process, tech stack, or directory structure to ensure continuity for future development.
-- **Git Operations**: I am permitted to stage changes and draft/execute commit messages upon request. However, I must **NEVER** automatically push to `origin` or any remote repository. All pushes must be explicitly performed or confirmed by the user.
+- **Maintenance**: This `GEMINI.md` file is the primary source of truth. It **MUST** be updated immediately following any significant changes.
+- **Git Operations**: I am permitted to stage changes and draft/execute commit messages. However, I must **NEVER** automatically push to `origin` unless explicitly instructed for a specific task.
 
 ## Future Upgrades
-- **Critical CSS**: Inline the CSS required for the initial viewport to eliminate render-blocking CSS.
+- **Critical CSS**: Inline the CSS required for the initial viewport.
 - **Implementation of a contact form handler**: Add a backend or serverless function to handle inquiries.
