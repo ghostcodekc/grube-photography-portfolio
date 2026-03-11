@@ -6,7 +6,8 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Serve static files
+// Serve static files with explicit MIME types if needed
+express.static.mime.define({'image/avif': ['avif']});
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware to set basePath
@@ -16,32 +17,34 @@ app.use((req, res, next) => {
 });
 
 // Define routes
-app.get('/', (req, res) => {
+app.get(['/', '/index.html'], (req, res) => {
   res.render('pages/index', { basePath: res.locals.basePath });
 });
 
-app.get('/about', (req, res) => {
+app.get(['/about', '/about.html'], (req, res) => {
   res.render('pages/about', { basePath: res.locals.basePath });
 });
 
-app.get('/portraits', (req, res) => {
+app.get(['/portraits', '/portraits.html'], (req, res) => {
   res.render('pages/portraits', { basePath: res.locals.basePath });
 });
 
-app.get('/services', (req, res) => {
+app.get(['/services', '/services.html'], (req, res) => {
   res.render('pages/services', { basePath: res.locals.basePath });
 });
 
 // Serve static HTML files
-app.use(express.static(path.join(__dirname, 'dist')));
-
-// Handle 404 for static HTML files
-app.use((req, res, next) => {
-  if (req.accepts('html')) {
-    res.status(404).sendFile(path.join(__dirname, 'dist', '404.html'));
-  } else {
-    next();
+app.use(express.static(path.join(__dirname, 'dist'), {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.avif')) {
+      res.setHeader('Content-Type', 'image/avif');
+    }
   }
+}));
+
+// Handle 404 for dynamic rendering
+app.use((req, res, next) => {
+  res.status(404).render('pages/404', { basePath: res.locals.basePath });
 });
 
 // Start the server
