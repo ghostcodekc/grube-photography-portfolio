@@ -4,11 +4,11 @@ const sharp = require('sharp');
 
 const thumbsBaseDir = path.join(__dirname, 'public', 'assets', 'images', 'thumbs');
 
-// Cleanup existing thumbnails
-if (fs.existsSync(thumbsBaseDir)) {
-  console.log('Cleaning up old thumbnails...');
-  fs.rmSync(thumbsBaseDir, { recursive: true, force: true });
-}
+// // Cleanup existing thumbnails
+// if (fs.existsSync(thumbsBaseDir)) {
+//   console.log('Cleaning up old thumbnails...');
+//   fs.rmSync(thumbsBaseDir, { recursive: true, force: true });
+// }
 
 // Ensure the thumbs directory exists with subfolders
 ['general', 'portraits'].forEach(sub => {
