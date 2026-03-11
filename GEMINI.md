@@ -43,5 +43,11 @@ A photography portfolio website for Andrew Grube, featuring a gallery, services,
 - **Images**: High-resolution images are stored in `public/assets/images/full/`, while optimized thumbnails and responsive variants are in `public/assets/images/thumbs/`.
 - **Styling**: Prefer Tailwind utility classes. The main output is generated to `public/assets/css/output.css`.
 
+## Documentation Mandate
+- **Maintenance**: This `GEMINI.md` file is the primary source of truth for the project's architecture and standards. It **MUST** be updated immediately following any significant changes to the build process, tech stack, or directory structure to ensure continuity for future development.
+
 ## Future Upgrades
-- Optimization of image loading (lazy loading is partially implemented via `<picture>` tags).
+- **Refactor to Data (`gallery.json`)**: Automate the gallery by moving image metadata (filenames, titles, locations, alt text) from `index.ejs` into a centralized `src/data/gallery.json`.
+  - **Strategy**: Update `index.ejs` to loop through this JSON. New photos can then be deployed by simply uploading to `full/` and adding an entry to the JSON, triggering an Amplify build.
+- **Extreme 3G Optimization**: Explore removing jQuery/Lightbox2 in favor of a modern, zero-dependency lightbox (like PhotoSwipe v5) to further reduce payload size.
+- **Critical CSS**: Inline the CSS required for the initial viewport to eliminate render-blocking CSS.
