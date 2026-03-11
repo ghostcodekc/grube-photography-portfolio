@@ -10,15 +10,18 @@ A modern, fast, and data-driven photography portfolio website.
 
 ## 📸 How to Add New Images
 
-The gallery is data-driven, meaning you don't need to touch HTML to add new photos.
+The gallery is data-driven and organized by category.
 
 ### 1. Upload the Full Image
-- Place your high-resolution WebP (or JPG/PNG) image into:
-  `public/assets/images/full/`
+- **General Gallery**: Place high-res images in `public/assets/images/full/general/`
+- **Portraits Gallery**: Place high-res images in `public/assets/images/full/portraits/`
 
 ### 2. Update the Gallery Data
-- Open `src/data/gallery.json`.
-- Add a new entry for your photo:
+Open the corresponding JSON file in `src/data/`:
+- `gallery.json` for general photos.
+- `portraits.json` for portrait photos.
+
+Add a new entry:
 ```json
 {
   "id": "YOUR_FILENAME_WITHOUT_EXTENSION",
@@ -26,20 +29,16 @@ The gallery is data-driven, meaning you don't need to touch HTML to add new phot
   "alt": "Accessibility Description",
   "width": 1234,  // Actual width of the full-res file
   "height": 5678, // Actual height of the full-res file
-  "categories": ["general", "portrait"], // Use "general" for home page, "portrait" for portraits page
-  "isHero": false // Set to true if this should be the top featured image on the home page
+  "isHero": false // (Only in gallery.json) Set to true for the top home page image
 }
 ```
 
-### 3. Build the Site
-- Run the build command:
+### 3. Build and Deploy
+- Run the build command to generate the static site:
   ```bash
   npm run build
   ```
-- This will:
-  - Scan your new image.
-  - Generate optimized AVIF and WebP thumbnails (Small, Medium, and 4:3 cropped).
-  - Render the updated HTML pages into the `dist/` folder.
+- If you are running the development server (`npm start`), you must **restart the server** to see changes made to the JSON files.
 
 ### 4. Deploy
 - Commit your changes and push to `main`. AWS Amplify will automatically detect the changes and deploy the site.

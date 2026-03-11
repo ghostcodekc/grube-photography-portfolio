@@ -1,99 +1,95 @@
 [
   {
+    "id": "NorthernLights",
+    "title": "Northern Lights (2025) - Kansas City, Missouri",
+    "alt": "Northern Lights",
+    "isHero": true,
+    "width": 7447,
+    "height": 3923
+  },
+  {
     "id": "DSC09513",
     "title": "Union Station in December (2024) - Kansas City, Missouri",
     "alt": "Union Station in December",
     "isHero": true,
     "width": 7977,
-    "height": 3436,
-    "categories": ["general"]
+    "height": 3436
   },
   {
     "id": "DSC_2569",
     "title": "Broken Dreams (2024) - Kansas City, Missouri",
     "alt": "West Bottoms Broken Down Honda",
     "width": 5568,
-    "height": 3712,
-    "categories": ["general"]
-  },
-  {
-    "id": "DSC_2549",
-    "title": "test - Kansas City, Missouri",
-    "alt": "test",
-    "width": 3609,
-    "height": 5414,
-    "categories": ["general", "portrait"]
+    "height": 3712
   },
   {
     "id": "IMG_0570",
     "title": "Image 0570 - Kansas City, Missouri",
     "alt": "Image 0570",
     "width": 5015,
-    "height": 3327,
-    "categories": ["general"]
-  },
-  {
-    "id": "DSC_1517",
-    "title": "Image 1517 - Kansas City, Missouri",
-    "alt": "Image 1517",
-    "width": 5600,
-    "height": 3728,
-    "categories": ["general", "portrait"]
+    "height": 3327
   },
   {
     "id": "DSC_2167",
     "title": "Image 2167 - Kansas City, Missouri",
     "alt": "Image 2167",
     "width": 3407,
-    "height": 2805,
-    "categories": ["general"]
+    "height": 2805
   },
   {
     "id": "DSC_2332",
     "title": "Image 2332 - Kansas City, Missouri",
     "alt": "Image 2332",
     "width": 5599,
-    "height": 3566,
-    "categories": ["general"]
+    "height": 3566
   },
   {
     "id": "IMG_0575",
     "title": "Image 0575 - Kansas City, Missouri",
     "alt": "Image 0575",
     "width": 5568,
-    "height": 3712,
-    "categories": ["general"]
+    "height": 3712
   },
   {
     "id": "IMG_0577",
     "title": "Image 0577 - Kansas City, Missouri",
     "alt": "Image 0577",
     "width": 5568,
-    "height": 3712,
-    "categories": ["general"]
+    "height": 3712
   },
   {
     "id": "IMG_0578",
     "title": "Image 0578 - Kansas City, Missouri",
     "alt": "Image 0578",
     "width": 3712,
-    "height": 2475,
-    "categories": ["general"]
+    "height": 2475
   },
   {
     "id": "IMG_0580",
     "title": "Image 0580 - Kansas City, Missouri",
     "alt": "Image 0580",
     "width": 5568,
-    "height": 3712,
-    "categories": ["general"]
+    "height": 3712
+  },
+  {
+    "id": "DSC_2549",
+    "title": "test - Kansas City, Missouri",
+    "alt": "test",
+    "width": 3609,
+    "height": 5414
+  },
+  {
+    "id": "DSC_1517",
+    "title": "Image 1517 - Kansas City, Missouri",
+    "alt": "Image 1517",
+    "width": 5600,
+    "height": 3728
   },
   {
     "id": "IMG_0571",
     "title": "Image 0571 - Kansas City, Missouri",
     "alt": "Image 0571",
     "width": 5568,
-    "height": 3712,
-    "categories": ["general", "portrait"]
+    "height": 3712
   }
 ]

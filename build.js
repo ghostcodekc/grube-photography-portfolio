@@ -15,11 +15,14 @@ if (!fs.existsSync('dist')) {
   }
 }
 
-// Ensure the thumbs directory exists
-const thumbsDir = path.join(__dirname, 'public', 'assets', 'images', 'thumbs');
-if (!fs.existsSync(thumbsDir)) {
-  fs.mkdirSync(thumbsDir, { recursive: true });
-}
+// Ensure the thumbs directory exists with subfolders
+const thumbsBaseDir = path.join(__dirname, 'public', 'assets', 'images', 'thumbs');
+['general', 'portraits'].forEach(sub => {
+  const dir = path.join(thumbsBaseDir, sub);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+});
 
 // Define the pages to render
 const pages = [
@@ -30,16 +33,19 @@ const pages = [
   { template: 'pages/404.ejs', output: 'dist/404.html' },
 ];
 
-// Helper to generate thumbnails
-async function generateThumbnails() {
-  const fullDir = path.join(__dirname, 'public', 'assets', 'images', 'full');
+// Helper to generate thumbnails for a specific category
+async function generateThumbnailsForCategory(category) {
+  const fullDir = path.join(__dirname, 'public', 'assets', 'images', 'full', category);
+  const thumbsDir = path.join(thumbsBaseDir, category);
+  
+  if (!fs.existsSync(fullDir)) return;
+
   const files = fs.readdirSync(fullDir).filter(file => /\.(webp|jpg|jpeg|png)$/i.test(file));
 
   for (const file of files) {
     const fileName = path.parse(file).name;
     const fullPath = path.join(fullDir, file);
 
-    // Define two sets of outputs: Hero (Original Aspect) and Thumb (4:3 Crop)
     const taskGroups = [
       {
         name: 'hero',
@@ -73,18 +79,18 @@ async function generateThumbnails() {
           const outputPath = path.join(thumbsDir, outputName);
 
           if (!fs.existsSync(outputPath)) {
-            console.log(`Generating ${group.name} (${format.ext}): ${outputName}`);
+            console.log(`Generating ${category}/${group.name} (${format.ext}): ${outputName}`);
             let pipeline = sharp(fullPath);
-
+            
             if (group.crop) {
               pipeline = pipeline.resize(size.width, size.height, {
                 fit: 'cover',
                 position: 'center'
               });
             } else {
-              pipeline = pipeline.resize(size.width); // Preserve aspect ratio
+              pipeline = pipeline.resize(size.width);
             }
-
+            
             if (format.ext === '.avif') {
               await pipeline.avif({ quality: format.quality, effort: 4 }).toFile(outputPath);
             } else {
@@ -97,20 +103,22 @@ async function generateThumbnails() {
   }
 }
 
-// Load gallery data
+// Load data
 const gallery = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'gallery.json'), 'utf8'));
+const portraits = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'portraits.json'), 'utf8'));
 
 // Main build process
 async function build() {
   console.log('Starting image optimization...');
-  await generateThumbnails();
+  await generateThumbnailsForCategory('general');
+  await generateThumbnailsForCategory('portraits');
 
   // Render each page
   pages.forEach(page => {
     const templatePath = path.join(__dirname, 'views', page.template);
     const outputPath = path.join(__dirname, page.output);
 
-    ejs.renderFile(templatePath, { basePath: '', gallery }, (err, str) => {
+    ejs.renderFile(templatePath, { basePath: '', gallery, portraits }, (err, str) => {
       if (err) {
         console.error(`Error rendering ${templatePath}:`, err);
       } else {

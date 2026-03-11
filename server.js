@@ -7,8 +7,9 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Load gallery data
+// Load data
 const gallery = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'gallery.json'), 'utf8'));
+const portraits = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'portraits.json'), 'utf8'));
 
 // Serve static files with explicit MIME types if needed
 express.static.mime.define({'image/avif': ['avif']});
@@ -30,7 +31,7 @@ app.get(['/about', '/about.html'], (req, res) => {
 });
 
 app.get(['/portraits', '/portraits.html'], (req, res) => {
-  res.render('pages/portraits', { basePath: res.locals.basePath, gallery });
+  res.render('pages/portraits', { basePath: res.locals.basePath, portraits });
 });
 
 app.get(['/services', '/services.html'], (req, res) => {

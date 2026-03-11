@@ -8,26 +8,22 @@
   <%- include('../partials/sidebar') %>
   <div class="content lg:ml-100 mt-4 lg:mr-5 py-4 px-4 flex-1">
     <div id="gallery">
-      <% 
-        const portraitImages = gallery.filter(img => img.categories.includes('portrait'));
-      %>
-
       <!-- Portrait Gallery -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        <% portraitImages.forEach(img => { %>
+        <% portraits.forEach(img => { %>
         <div class="overflow-hidden rounded-lg">
-          <a href="assets/images/full/<%= img.id %>.webp" 
+          <a href="assets/images/full/portraits/<%= img.id %>.webp" 
              data-pswp-width="<%= img.width %>" 
              data-pswp-height="<%= img.height %>" 
              target="_blank">
             <picture>
-              <source srcset="assets/images/thumbs/<%= img.id %>-thumb-small.avif" type="image/avif" media="(max-width: 600px)">
-              <source srcset="assets/images/thumbs/<%= img.id %>-thumb-medium.avif" type="image/avif" media="(max-width: 1200px)">
-              <source srcset="assets/images/thumbs/<%= img.id %>-thumb.avif" type="image/avif" media="(min-width: 1201px)">
-              <source srcset="assets/images/thumbs/<%= img.id %>-thumb-small.webp" type="image/webp" media="(max-width: 600px)">
-              <source srcset="assets/images/thumbs/<%= img.id %>-thumb-medium.webp" type="image/webp" media="(max-width: 1200px)">
-              <source srcset="assets/images/thumbs/<%= img.id %>-thumb.webp" type="image/webp" media="(min-width: 1201px)">
-              <img src="assets/images/thumbs/<%= img.id %>-thumb.webp" alt="<%= img.alt %>" class="w-full h-auto aspect-[4/3] object-cover" loading="lazy" decoding="async">
+              <source srcset="assets/images/thumbs/portraits/<%= img.id %>-thumb-small.avif" type="image/avif" media="(max-width: 600px)">
+              <source srcset="assets/images/thumbs/portraits/<%= img.id %>-thumb-medium.avif" type="image/avif" media="(max-width: 1200px)">
+              <source srcset="assets/images/thumbs/portraits/<%= img.id %>-thumb.avif" type="image/avif" media="(min-width: 1201px)">
+              <source srcset="assets/images/thumbs/portraits/<%= img.id %>-thumb-small.webp" type="image/webp" media="(max-width: 600px)">
+              <source srcset="assets/images/thumbs/portraits/<%= img.id %>-thumb-medium.webp" type="image/webp" media="(max-width: 1200px)">
+              <source srcset="assets/images/thumbs/portraits/<%= img.id %>-thumb.webp" type="image/webp" media="(min-width: 1201px)">
+              <img src="assets/images/thumbs/portraits/<%= img.id %>-thumb.webp" alt="<%= img.alt %>" class="w-full h-auto aspect-[4/3] object-cover" loading="lazy" decoding="async">
             </picture>
           </a>
         </div>
