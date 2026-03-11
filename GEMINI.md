@@ -6,7 +6,7 @@ A photography portfolio website for Andrew Grube, featuring a gallery, services,
 ## Architecture
 - **Hybrid SSR/Static**: 
   - **Development**: Uses Express and EJS to serve dynamic routes.
-  - **Build Process**: `build.js` renders EJS templates into static `.html` files and automatically generates optimized thumbnails (small/medium/4:3 cropped) from organized `full/` image directories using `sharp`.
+  - **Build Process**: `build.js` renders EJS templates into static `.html` files. Optimized thumbnails are generated locally using `generate-thumbs.js` (`npm run thumbs`) and committed to the repository to keep deployment times fast.
 - **Data-Driven Gallery**: The site is powered by `src/data/gallery.json` (Home) and `src/data/portraits.json` (Portraits), allowing for easy image management without editing HTML.
 - **Automated Metadata**: The build and development processes automatically extract image dimensions (width/height) using `sharp`, eliminating the need for manual technical data entry in JSON files.
 - **Categorized Storage**: Images are organized into `general` and `portraits` subdirectories within both `full/` and `thumbs/` folders.

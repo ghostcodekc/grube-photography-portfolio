@@ -52,11 +52,22 @@ Add a new entry:
 ```
 *Note: `width` and `height` are automatically detected during the build process and do not need to be manually added.*
 
-### 3. Build
-Run `npm run build` to generate optimized thumbnails and static HTML.
+### 3. Build Thumbnails (Local Only)
+Run this command on your machine to generate optimized thumbnails:
+```bash
+npm run thumbs
+```
+*Note: Thumbnails are now tracked in Git to speed up Amplify builds. You must run this locally before committing new images.*
 
-### 4. Deploy
-Commit your changes and push to `main`. AWS Amplify will automatically detect the changes and deploy the site.
+### 4. Build and Deploy
+- Run the build command to generate the static site:
+  ```bash
+  npm run build
+  ```
+- If you are running the development server (`npm start`), you must **restart the server** to see changes made to the JSON files.
+
+### 5. Deploy
+- Commit your changes (including the new thumbnails) and push to `main`. AWS Amplify will automatically detect the changes and deploy the site.
 
 ## 🛠 Tech Stack
 - **Engine**: Node.js / Express / EJS

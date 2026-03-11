@@ -654,10 +654,6 @@ video {
   display: none;
 }
 
-.aspect-\[3\/4\] {
-  aspect-ratio: 3/4;
-}
-
 .aspect-\[4\/3\] {
   aspect-ratio: 4/3;
 }
@@ -666,20 +662,16 @@ video {
   height: 1.5rem;
 }
 
+.h-\[50vh\] {
+  height: 50vh;
+}
+
 .h-auto {
   height: auto;
 }
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[50vh\] {
-  height: 50vh;
-}
-
-.max-h-full {
-  max-height: 100%;
 }
 
 .min-h-screen {
@@ -724,10 +716,6 @@ video {
 
 .gap-3 {
   gap: 0.75rem;
-}
-
-.overflow-auto {
-  overflow: auto;
 }
 
 .overflow-hidden {
