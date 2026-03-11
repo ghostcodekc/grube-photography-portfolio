@@ -37,39 +37,60 @@ async function generateThumbnails() {
 
   for (const file of files) {
     const fileName = path.parse(file).name;
-    const ext = '.webp'; // Standardizing on webp for production
     const fullPath = path.join(fullDir, file);
 
-    const sizes = [
-      { name: '', width: 1600, height: 1200 }, // Standardized 4:3 thumb
-      { name: '-medium', width: 1200, height: 900 },
-      { name: '-small', width: 800, height: 600 }
+    // Define two sets of outputs: Hero (Original Aspect) and Thumb (4:3 Crop)
+    const taskGroups = [
+      {
+        name: 'hero',
+        crop: false,
+        sizes: [
+          { suffix: '', width: 2000 },
+          { suffix: '-medium', width: 1200 },
+          { suffix: '-small', width: 800 }
+        ]
+      },
+      {
+        name: 'thumb',
+        crop: true,
+        sizes: [
+          { suffix: '-thumb', width: 1600, height: 1200 },
+          { suffix: '-thumb-medium', width: 1200, height: 900 },
+          { suffix: '-thumb-small', width: 800, height: 600 }
+        ]
+      }
     ];
 
-    for (const size of sizes) {
-      const formats = [
-        { ext: '.avif', quality: 50 },
-        { ext: '.webp', quality: 80 }
-      ];
+    for (const group of taskGroups) {
+      for (const size of group.sizes) {
+        const formats = [
+          { ext: '.avif', quality: 50 },
+          { ext: '.webp', quality: 80 }
+        ];
 
-      for (const format of formats) {
-        const outputName = `${fileName}${size.name}${format.ext}`;
-        const outputPath = path.join(thumbsDir, outputName);
+        for (const format of formats) {
+          const outputName = `${fileName}${size.suffix}${format.ext}`;
+          const outputPath = path.join(thumbsDir, outputName);
 
-        // Forcing regeneration for the new aspect ratio
-        console.log(`Generating 3:4 thumbnail: ${outputName}`);
-        let pipeline = sharp(fullPath);
-        
-        // Resize and crop to 3:4 aspect ratio
-        pipeline = pipeline.resize(size.width, size.height, {
-          fit: 'cover',
-          position: 'center' // Can be adjusted to 'entropy' or 'attention' for smarter cropping
-        });
-        
-        if (format.ext === '.avif') {
-          await pipeline.avif({ quality: format.quality, effort: 4 }).toFile(outputPath);
-        } else {
-          await pipeline.webp({ quality: format.quality }).toFile(outputPath);
+          if (!fs.existsSync(outputPath)) {
+            console.log(`Generating ${group.name} (${format.ext}): ${outputName}`);
+            let pipeline = sharp(fullPath);
+
+            if (group.crop) {
+              pipeline = pipeline.resize(size.width, size.height, {
+                fit: 'cover',
+                position: 'center'
+              });
+            } else {
+              pipeline = pipeline.resize(size.width); // Preserve aspect ratio
+            }
+
+            if (format.ext === '.avif') {
+              await pipeline.avif({ quality: format.quality, effort: 4 }).toFile(outputPath);
+            } else {
+              await pipeline.webp({ quality: format.quality }).toFile(outputPath);
+            }
+          }
         }
       }
     }
