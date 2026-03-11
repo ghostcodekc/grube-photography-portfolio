@@ -1,10 +1,14 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const app = express();
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+// Load gallery data
+const gallery = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'gallery.json'), 'utf8'));
 
 // Serve static files with explicit MIME types if needed
 express.static.mime.define({'image/avif': ['avif']});
@@ -18,7 +22,7 @@ app.use((req, res, next) => {
 
 // Define routes
 app.get(['/', '/index.html'], (req, res) => {
-  res.render('pages/index', { basePath: res.locals.basePath });
+  res.render('pages/index', { basePath: res.locals.basePath, gallery });
 });
 
 app.get(['/about', '/about.html'], (req, res) => {

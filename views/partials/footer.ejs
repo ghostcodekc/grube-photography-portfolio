@@ -3,6 +3,15 @@
         <p>&copy;<%= new Date().getFullYear() %> Andrew Grube. All rights reserved.</p>
     </div>
     <script defer src="assets/js/burger-menu.min.js"></script>
-    <script defer src="assets/js/lightbox-plus-jquery.js"></script>
     <script defer src="assets/js/feather-replace.min.js"></script>
+    
+    <script type="module">
+        import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.js';
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: '#gallery',
+            children: 'a',
+            pswpModule: () => import('https://unpkg.com/photoswipe@5.4.4/dist/photoswipe.esm.js')
+        });
+        lightbox.init();
+    </script>
 </footer>

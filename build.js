@@ -97,6 +97,9 @@ async function generateThumbnails() {
   }
 }
 
+// Load gallery data
+const gallery = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'gallery.json'), 'utf8'));
+
 // Main build process
 async function build() {
   console.log('Starting image optimization...');
@@ -107,7 +110,7 @@ async function build() {
     const templatePath = path.join(__dirname, 'views', page.template);
     const outputPath = path.join(__dirname, page.output);
 
-    ejs.renderFile(templatePath, { basePath: '' }, (err, str) => {
+    ejs.renderFile(templatePath, { basePath: '', gallery }, (err, str) => {
       if (err) {
         console.error(`Error rendering ${templatePath}:`, err);
       } else {
