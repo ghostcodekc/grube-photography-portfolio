@@ -30,7 +30,7 @@ app.get(['/about', '/about.html'], (req, res) => {
 });
 
 app.get(['/portraits', '/portraits.html'], (req, res) => {
-  res.render('pages/portraits', { basePath: res.locals.basePath });
+  res.render('pages/portraits', { basePath: res.locals.basePath, gallery });
 });
 
 app.get(['/services', '/services.html'], (req, res) => {

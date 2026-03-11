@@ -9,8 +9,9 @@
   <div class="content lg:ml-100 mt-4 lg:mr-5 py-4 px-4 flex-1">
     <div id="gallery">
       <% 
-        const heroImage = gallery.find(img => img.isHero);
-        const gridImages = gallery.filter(img => !img.isHero);
+        const filteredGallery = gallery.filter(img => img.categories.includes('general'));
+        const heroImage = filteredGallery.find(img => img.isHero);
+        const gridImages = filteredGallery.filter(img => !img.isHero);
       %>
 
       <% if (heroImage) { %>

@@ -1,19 +1,38 @@
 <!doctype html>
 <html lang="en">
-<html>
+<head>
   <title>Andrew Grube Photography - Portraits</title>
-   <%- include('../partials/header') %>
-<body class="bg-gradient-to-t from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% flex flex-col max-h-full overflow-auto">
+  <%- include('../partials/header') %>
+</head>
+<body class="bg-gradient-to-t from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% flex flex-col min-h-screen">
   <%- include('../partials/sidebar') %>
-  <div class="content lg:ml-96">
-    <div>
-        <div class="flex flex-col items-center justify-center text-center h-screen">
-            <div class="text-white">
-              <h1 class="text-4xl font-bold">Coming Soon</h1>
-              <p class="mt-4 text-lg">We're working on something awesome!</p>
-            </div>
-          </div>
-    </div>
+  <div class="content lg:ml-100 mt-4 lg:mr-5 py-4 px-4 flex-1">
+    <div id="gallery">
+      <% 
+        const portraitImages = gallery.filter(img => img.categories.includes('portrait'));
+      %>
+
+      <!-- Portrait Gallery -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <% portraitImages.forEach(img => { %>
+        <div class="overflow-hidden rounded-lg">
+          <a href="assets/images/full/<%= img.id %>.webp" 
+             data-pswp-width="<%= img.width %>" 
+             data-pswp-height="<%= img.height %>" 
+             target="_blank">
+            <picture>
+              <source srcset="assets/images/thumbs/<%= img.id %>-thumb-small.avif" type="image/avif" media="(max-width: 600px)">
+              <source srcset="assets/images/thumbs/<%= img.id %>-thumb-medium.avif" type="image/avif" media="(max-width: 1200px)">
+              <source srcset="assets/images/thumbs/<%= img.id %>-thumb.avif" type="image/avif" media="(min-width: 1201px)">
+              <source srcset="assets/images/thumbs/<%= img.id %>-thumb-small.webp" type="image/webp" media="(max-width: 600px)">
+              <source srcset="assets/images/thumbs/<%= img.id %>-thumb-medium.webp" type="image/webp" media="(max-width: 1200px)">
+              <source srcset="assets/images/thumbs/<%= img.id %>-thumb.webp" type="image/webp" media="(min-width: 1201px)">
+              <img src="assets/images/thumbs/<%= img.id %>-thumb.webp" alt="<%= img.alt %>" class="w-full h-auto aspect-[4/3] object-cover" loading="lazy" decoding="async">
+            </picture>
+          </a>
+        </div>
+        <% }) %>
+      </div>
     </div>
   </div>
   <%- include('../partials/footer') %>
