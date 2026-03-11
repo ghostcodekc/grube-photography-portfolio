@@ -47,11 +47,10 @@ Add a new entry:
   "id": "YOUR_FILENAME_WITHOUT_EXTENSION",
   "title": "Display Title - Location",
   "alt": "Accessibility Description",
-  "width": 1234,  // Actual width of the full-res file
-  "height": 5678, // Actual height of the full-res file
   "isHero": false // (Only in gallery.json) Set to true for the top home page image
 }
 ```
+*Note: `width` and `height` are automatically detected during the build process and do not need to be manually added.*
 
 ### 3. Build
 Run `npm run build` to generate optimized thumbnails and static HTML.

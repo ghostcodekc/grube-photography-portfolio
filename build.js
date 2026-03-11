@@ -103,15 +103,35 @@ async function generateThumbnailsForCategory(category) {
   }
 }
 
+// Helper to automatically find dimensions if missing
+async function enrichData(data, category) {
+  for (const img of data) {
+    if (!img.width || !img.height) {
+      const imgPath = path.join(__dirname, 'public', 'assets', 'images', 'full', category, `${img.id}.webp`);
+      if (fs.existsSync(imgPath)) {
+        const metadata = await sharp(imgPath).metadata();
+        img.width = metadata.width;
+        img.height = metadata.height;
+        console.log(`Auto-detected dimensions for ${img.id}: ${img.width}x${img.height}`);
+      }
+    }
+  }
+  return data;
+}
+
 // Load data
-const gallery = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'gallery.json'), 'utf8'));
-const portraits = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'portraits.json'), 'utf8'));
+let gallery = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'gallery.json'), 'utf8'));
+let portraits = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'portraits.json'), 'utf8'));
 
 // Main build process
 async function build() {
   console.log('Starting image optimization...');
   await generateThumbnailsForCategory('general');
   await generateThumbnailsForCategory('portraits');
+
+  console.log('Enriching data with dimensions...');
+  gallery = await enrichData(gallery, 'general');
+  portraits = await enrichData(portraits, 'portraits');
 
   // Render each page
   pages.forEach(page => {

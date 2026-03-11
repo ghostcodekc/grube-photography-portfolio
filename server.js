@@ -1,15 +1,37 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const sharp = require('sharp');
 const app = express();
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Helper to automatically find dimensions if missing
+async function enrichData(data, category) {
+  for (const img of data) {
+    if (!img.width || !img.height) {
+      const imgPath = path.join(__dirname, 'public', 'assets', 'images', 'full', category, `${img.id}.webp`);
+      if (fs.existsSync(imgPath)) {
+        const metadata = await sharp(imgPath).metadata();
+        img.width = metadata.width;
+        img.height = metadata.height;
+      }
+    }
+  }
+  return data;
+}
+
 // Load data
-const gallery = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'gallery.json'), 'utf8'));
-const portraits = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'portraits.json'), 'utf8'));
+let gallery = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'gallery.json'), 'utf8'));
+let portraits = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'portraits.json'), 'utf8'));
+
+// Enrich data immediately on start
+(async () => {
+  gallery = await enrichData(gallery, 'general');
+  portraits = await enrichData(portraits, 'portraits');
+})();
 
 // Serve static files with explicit MIME types if needed
 express.static.mime.define({'image/avif': ['avif']});
